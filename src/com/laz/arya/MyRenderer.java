@@ -6,7 +6,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.opengl.GLSurfaceView.Renderer;
-import android.os.SystemClock;
+//import android.os.SystemClock;
 
 public class MyRenderer implements Renderer {
 
@@ -41,8 +41,8 @@ public class MyRenderer implements Renderer {
         
         
 	    // Create a rotation transformation for the triangle
-	    long time = SystemClock.uptimeMillis() % 4000L;
-	    mAngle = 0.090f * ((int) time);
+	    //long time = SystemClock.uptimeMillis() % 4000L;
+	    //mAngle = 0.090f * ((int) time);
 	    Matrix.setRotateM(mRotationMatrix, 0, mAngle, 0, 0, -1.0f);
 
 	    // Combine the rotation matrix with the projection and camera view
