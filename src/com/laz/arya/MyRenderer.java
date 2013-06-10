@@ -6,6 +6,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.opengl.GLSurfaceView.Renderer;
+import android.os.SystemClock;
 
 public class MyRenderer implements Renderer {
 
@@ -15,9 +16,18 @@ public class MyRenderer implements Renderer {
     private final float[] mProjMatrix = new float[16];
     private final float[] mVMatrix = new float[16];
     private final float[] mRotationMatrix = new float[16];
+    // Declare as volatile because we are updating it from another thread
+    public volatile float mAngle;
 	
 	@Override
 	public void onDrawFrame(GL10 gl) {
+		
+		
+
+
+	    // Draw triangle
+	    mTriangle.draw(mMVPMatrix);
+		
 	      // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         
@@ -29,6 +39,14 @@ public class MyRenderer implements Renderer {
 		// Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
         
+        
+	    // Create a rotation transformation for the triangle
+	    long time = SystemClock.uptimeMillis() % 4000L;
+	    mAngle = 0.090f * ((int) time);
+	    Matrix.setRotateM(mRotationMatrix, 0, mAngle, 0, 0, -1.0f);
+
+	    // Combine the rotation matrix with the projection and camera view
+	    Matrix.multiplyMM(mMVPMatrix, 0, mRotationMatrix, 0, mMVPMatrix, 0);
         
         // Draw shape
         mTriangle.draw(mMVPMatrix);

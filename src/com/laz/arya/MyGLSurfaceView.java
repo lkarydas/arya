@@ -14,6 +14,6 @@ class MyGLSurfaceView extends GLSurfaceView {
 		setEGLContextClientVersion(2);
 		setRenderer(new MyRenderer());
 		// Render the view only when there is a change in the drawing data
-		setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+		//setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 	}
 }
