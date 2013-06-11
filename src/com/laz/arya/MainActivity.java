@@ -10,7 +10,10 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.util.Log;
 
 public class MainActivity extends FragmentActivity implements
@@ -22,11 +25,51 @@ public class MainActivity extends FragmentActivity implements
 	 */
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	private static final String TAG = "AryaMain";
+	
+	private EditText text;
 
-	public void onClick(View view)
-	{
-		Log.d(TAG, "Button clicked!");
-	}
+
+	
+	
+	  // This method is called at button click because we assigned the name to the
+	  // "OnClick property" of the button
+	  public void onClick(View view) {
+		  Log.d(TAG, "Button clicked!");
+	    switch (view.getId()) {
+	    case R.id.button1:
+	      RadioButton celsiusButton = (RadioButton) findViewById(R.id.radio0);
+	      RadioButton fahrenheitButton = (RadioButton) findViewById(R.id.radio1);
+	      if (text.getText().length() == 0) {
+	        Toast.makeText(this, "Please enter a valid number",
+	            Toast.LENGTH_LONG).show();
+	        return;
+	      }
+
+	      float inputValue = Float.parseFloat(text.getText().toString());
+	      if (celsiusButton.isChecked()) {
+	        text.setText(String
+	            .valueOf(convertFahrenheitToCelsius(inputValue)));
+	        celsiusButton.setChecked(false);
+	        fahrenheitButton.setChecked(true);
+	      } else {
+	        text.setText(String
+	            .valueOf(convertCelsiusToFahrenheit(inputValue)));
+	        fahrenheitButton.setChecked(false);
+	        celsiusButton.setChecked(true);
+	      }
+	      break;
+	    }
+	  }
+
+	  // Converts to celsius
+	  private float convertFahrenheitToCelsius(float fahrenheit) {
+	    return ((fahrenheit - 32) * 5 / 9);
+	  }
+
+	  // Converts to fahrenheit
+	  private float convertCelsiusToFahrenheit(float celsius) {
+	    return ((celsius * 9) / 5) + 32;
+	  }
 	
 	public void onGraphicsButtonClick(View view)
 	{
@@ -40,6 +83,7 @@ public class MainActivity extends FragmentActivity implements
 		Log.d(TAG, "MainActivity created!");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+	    text = (EditText) findViewById(R.id.editText1);
 
 		// Set up the action bar to show a dropdown list.
 		final ActionBar actionBar = getActionBar();
