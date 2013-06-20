@@ -1,16 +1,20 @@
 package com.laz.arya;
 
 import android.content.Context;
+import android.view.ScaleGestureDetector;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
 
-class MyGLSurfaceView extends GLSurfaceView {
+class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetector.OnScaleGestureListener{
+	
+	private static final String LOG_TAG = "arya";
 	
 	private MyRenderer mRenderer;
    	private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
 	private float mPreviousX;
 	private float mPreviousY;
+	private final ScaleGestureDetector gestureDetector;
 	
 	private static final String TAG = "AryaGL";
 	public MyGLSurfaceView(Context context){
@@ -23,10 +27,14 @@ class MyGLSurfaceView extends GLSurfaceView {
 		setRenderer(mRenderer);
 		// Render the view only when there is a change in the drawing data
 		setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+		
+		gestureDetector = new ScaleGestureDetector(context, this);
+		
 	}
 	
 	public boolean onTouchEvent(MotionEvent e)
 	{
+			
 		// MotionEvent reports input details from the touch screen and other 
 		// input controls. In this case, you are only interested in events where
 		// touch position changed.
@@ -58,8 +66,27 @@ class MyGLSurfaceView extends GLSurfaceView {
 		}
 		mPreviousX = x;
 		mPreviousY = y;
-		return true;
+		return gestureDetector.onTouchEvent(e);
 		
+		
+	}			
+
+	@Override
+	public boolean onScale(ScaleGestureDetector detector) {
+		Log.d(LOG_TAG, "scaling...");
+		return true;
+	}
+
+	@Override
+	public boolean onScaleBegin(ScaleGestureDetector detector) {
+		Log.d(LOG_TAG, "Scale start!");
+		return true;
+	}
+
+	@Override
+	public void onScaleEnd(ScaleGestureDetector detector) {
+			Log.d(LOG_TAG, "Scale ended!");
 		
 	}
+
 }
