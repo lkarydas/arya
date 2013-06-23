@@ -16,6 +16,8 @@ class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetector.OnSc
 	private float mPreviousY;
 	private final ScaleGestureDetector gestureDetector;
 	
+	private static boolean scalingInProgress;
+	
 	private static final String TAG = "AryaGL";
 	public MyGLSurfaceView(Context context){
 		super(context);
@@ -28,13 +30,18 @@ class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetector.OnSc
 		// Render the view only when there is a change in the drawing data
 		setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 		
+		scalingInProgress = false;
 		gestureDetector = new ScaleGestureDetector(context, this);
 		
 	}
 	
 	public boolean onTouchEvent(MotionEvent e)
 	{
-			
+		gestureDetector.onTouchEvent(e);
+		
+		if (scalingInProgress)
+			return true;
+
 		// MotionEvent reports input details from the touch screen and other 
 		// input controls. In this case, you are only interested in events where
 		// touch position changed.
@@ -66,26 +73,27 @@ class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetector.OnSc
 		}
 		mPreviousX = x;
 		mPreviousY = y;
-		return gestureDetector.onTouchEvent(e);
 		
-		
+		return true;
+
 	}			
 
 	@Override
 	public boolean onScale(ScaleGestureDetector detector) {
 		mRenderer.moveCamera(detector.getScaleFactor() - 1);
+		requestRender();
 		return true;
 	}
 
 	@Override
 	public boolean onScaleBegin(ScaleGestureDetector detector) {
-		Log.d(LOG_TAG, "Scale start!");
+		scalingInProgress = true;
 		return true;
 	}
 
 	@Override
 	public void onScaleEnd(ScaleGestureDetector detector) {
-			Log.d(LOG_TAG, "Scale ended!");
+		scalingInProgress = false;
 		
 	}
 
