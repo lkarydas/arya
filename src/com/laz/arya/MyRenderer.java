@@ -20,10 +20,7 @@ public class MyRenderer implements Renderer {
     public volatile float mAngle;
     
     private final float[] cameraPosition = new float[3];
-    
-    private final float zoomStep = 0.1f;
 	
-
     public void moveCamera(float step){
     	cameraPosition[2] += step*10;
     }
