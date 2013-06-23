@@ -18,12 +18,18 @@ public class MyRenderer implements Renderer {
     private final float[] mRotationMatrix = new float[16];
     // Declare as volatile because we are updating it from another thread
     public volatile float mAngle;
+    
+    private final float[] cameraPosition = new float[3];
+    
+    private final float zoomStep = 0.1f;
 	
+
+    public void moveCamera(float step){
+    	cameraPosition[2] += step*10;
+    }
+
 	@Override
 	public void onDrawFrame(GL10 gl) {
-		
-		
-
 
 	    // Draw triangle
 	    mTriangle.draw(mMVPMatrix);
@@ -33,7 +39,7 @@ public class MyRenderer implements Renderer {
         
 
 		// Set the camera position (View Matrix)
-        Matrix.setLookAtM(mVMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        Matrix.setLookAtM(mVMatrix, 0, cameraPosition[0], cameraPosition[1], cameraPosition[2], 0f, 0f, 0f, 0f, 1.0f, 0.0f);
         
         
 		// Calculate the projection and view transformation
@@ -75,6 +81,11 @@ public class MyRenderer implements Renderer {
 		
 	     // Set the background frame color
         GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+        
+        // Initialize camera position
+        cameraPosition[0] = 0;
+        cameraPosition[1] = 0;
+        cameraPosition[2] = -4;
 
 	}
 	

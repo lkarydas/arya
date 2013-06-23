@@ -73,7 +73,7 @@ class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetector.OnSc
 
 	@Override
 	public boolean onScale(ScaleGestureDetector detector) {
-		Log.d(LOG_TAG, "scaling...");
+		mRenderer.moveCamera(detector.getScaleFactor() - 1);
 		return true;
 	}
 
