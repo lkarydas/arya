@@ -11,6 +11,7 @@ import android.opengl.GLSurfaceView.Renderer;
 public class MyRenderer implements Renderer {
 
 	Triangle mTriangle;
+	Sphere mSphere;
     
     private final float[] mMVPMatrix = new float[16];
     private final float[] mProjMatrix = new float[16];
@@ -28,8 +29,7 @@ public class MyRenderer implements Renderer {
 	@Override
 	public void onDrawFrame(GL10 gl) {
 
-	    // Draw triangle
-	    mTriangle.draw(mMVPMatrix);
+
 		
 	      // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
@@ -52,7 +52,9 @@ public class MyRenderer implements Renderer {
 	    Matrix.multiplyMM(mMVPMatrix, 0, mRotationMatrix, 0, mMVPMatrix, 0);
         
         // Draw shape
-        mTriangle.draw(mMVPMatrix);
+        //mTriangle.draw(mMVPMatrix);
+        
+        mSphere.draw(mMVPMatrix);
 
 	}
 
@@ -75,6 +77,8 @@ public class MyRenderer implements Renderer {
 		
 	    // initialize a triangle
 	    mTriangle = new Triangle();
+	    
+	    mSphere = new Sphere(1f, 10, 10);
 		
 	     // Set the background frame color
         GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
