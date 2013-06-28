@@ -78,7 +78,7 @@ public class MyRenderer implements Renderer {
 	    // initialize a triangle
 	    mTriangle = new Triangle();
 	    
-	    mSphere = new Sphere(1f, 10, 10);
+	    mSphere = new Sphere(1f, (short) 10, (short) 10);
 		
 	     // Set the background frame color
         GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
