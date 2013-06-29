@@ -39,12 +39,7 @@ public class MyRenderer implements Renderer {
 
 	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
-		GLES20.glViewport(0, 0, width, height);
-
-		float ratio = (float) width / height;
-		// This projection matrix is applied to object coordinates
-		// in the onDrawFrame() method
-		Matrix.frustumM(mProjMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+		camera.setViewport(width, height);
 	}
 
 	@Override
