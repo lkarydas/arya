@@ -4,6 +4,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
+import com.laz.utils.Matrix4;
+
 import android.opengl.GLES20;
 
 class Triangle {
@@ -73,7 +75,7 @@ class Triangle {
 
     }
 
-    public void draw(float[] mvpMatrix) {
+    public void draw(Matrix4 ViewProjection) {
         // Add program to OpenGL environment
         GLES20.glUseProgram(mProgram);
 
@@ -98,7 +100,7 @@ class Triangle {
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
 
         // Apply the projection and view transformation
-        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mvpMatrix, 0);
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, ViewProjection.val, 0);
         
         // Draw the triangle
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
