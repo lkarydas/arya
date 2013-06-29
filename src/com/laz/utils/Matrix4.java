@@ -17,8 +17,10 @@
 package com.laz.utils;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 import android.opengl.Matrix;
+import android.util.Log;
 
 /** Encapsulates a <a href="http://en.wikipedia.org/wiki/Row-major_order">column major</a> 4 by 4 matrix. Like the {@link Vector3}
  * class it allows the chaining of methods by returning a reference to itself. For example:
@@ -1103,4 +1105,20 @@ public class Matrix4 implements Serializable {
 		mul(val, tmp);
 		return this;
 	}
+	
+	
+	public void print(String title){
+		Log.i("3D_stuff", title);
+		int j = 0;
+		String line;
+		for (int i = 0; i < 4; i++){
+			line = String.format(Locale.US,"%.2f %.2f %.2f %.2f", this.val[j++], this.val[j++], this.val[j++], this.val[j++]);
+			Log.i("3D_stuff", line);
+		}
+	}
+	
 }
+
+
+
+
