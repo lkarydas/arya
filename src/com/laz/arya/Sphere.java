@@ -6,6 +6,8 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
+import com.laz.utils.Matrix4;
+
 import android.opengl.GLES20;
 import android.util.Log;
 
@@ -71,7 +73,7 @@ public class Sphere {
 				points[v++] = y * radius;
 				points[v++] = z * radius;
 
-				Log.i("Sphere","Added point (" + x +", " + y + ", " +z +")");
+				//Log.i("Sphere","Added point (" + x +", " + y + ", " +z +")");
 
 				normals[n++] = x;
 				normals[n++] = y;
@@ -124,7 +126,7 @@ public class Sphere {
 	}
 
 
-	public void draw(float[] mvpMatrix) {
+	public void draw(Matrix4 modelView) {
 		// Add program to OpenGL environment
 		GLES20.glUseProgram(mProgram);
 
@@ -149,7 +151,7 @@ public class Sphere {
 		mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
 
 		// Apply the projection and view transformation
-		GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mvpMatrix, 0);
+		GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, modelView.val, 0);
 
 		// Draw the triangle
 		GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices.length, GLES20.GL_UNSIGNED_SHORT, indexBuffer);
