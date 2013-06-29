@@ -21,6 +21,8 @@ public class MyRenderer implements Renderer {
     public volatile float mAngle;
     
     private final float[] cameraPosition = new float[3];
+    
+    Camera3D camera;
 	
     public void moveCamera(float step){
     	cameraPosition[2] += step*10;
@@ -35,26 +37,9 @@ public class MyRenderer implements Renderer {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         
 
-		// Set the camera position (View Matrix)
-        Matrix.setLookAtM(mVMatrix, 0, cameraPosition[0], cameraPosition[1], cameraPosition[2], 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+		camera.update();
         
-        
-		// Calculate the projection and view transformation
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
-        
-        
-	    // Create a rotation transformation for the triangle
-	    //long time = SystemClock.uptimeMillis() % 4000L;
-	    //mAngle = 0.090f * ((int) time);
-	    Matrix.setRotateM(mRotationMatrix, 0, mAngle, 0, 0, -1.0f);
-
-	    // Combine the rotation matrix with the projection and camera view
-	    Matrix.multiplyMM(mMVPMatrix, 0, mRotationMatrix, 0, mMVPMatrix, 0);
-        
-        // Draw shape
-        //mTriangle.draw(mMVPMatrix);
-        
-        mSphere.draw(mMVPMatrix);
+        mSphere.draw(camera.combined);
 
 	}
 
@@ -74,6 +59,8 @@ public class MyRenderer implements Renderer {
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		
+		camera = new Camera3D();
+
 		
 	    // initialize a triangle
 	    mTriangle = new Triangle();
