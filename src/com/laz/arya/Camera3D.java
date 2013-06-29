@@ -63,6 +63,12 @@ import com.laz.utils.*;
 		private final Vector3 tmpVec = new Vector3();
 		private final Vector3 tmp = new Vector3();
 
+		
+		public void setViewport(float width, float height){
+			this.viewportWidth = width;
+			this.viewportHeight = height;
+		}
+		
 		public Camera3D(){
 			position.set(0, 0, 10);
 			
@@ -76,6 +82,8 @@ import com.laz.utils.*;
 			//TODO: Field of view has to be parameter
 			// Set projection matrix
 			projection.setToProjection(Math.abs(near), Math.abs(far), 67, aspect);
+			
+			projection.print("Projection matrix");
 			// Set view matrix
 			Log.i("3d_stuff", "position: " + position.toString());
 			Log.i("3d_stuff", "direction: " + direction.toString());
