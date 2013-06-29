@@ -6,7 +6,6 @@ import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.opengl.GLSurfaceView.Renderer;
-//import android.os.SystemClock;
 
 public class MyRenderer implements Renderer {
 
@@ -34,7 +33,7 @@ public class MyRenderer implements Renderer {
 		
 		camera.printViewMatrix();
 		
-		mSphere.draw(camera.combined);
+		mTriangle.draw(camera.combined);
 
 	}
 
@@ -60,12 +59,6 @@ public class MyRenderer implements Renderer {
 
 		// Set the background frame color
 		GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-
-		// Initialize camera position
-		cameraPosition[0] = 0;
-		cameraPosition[1] = 0;
-		cameraPosition[2] = -4;
-
 	}
 
 	public static int loadShader(int type, String shaderCode){
