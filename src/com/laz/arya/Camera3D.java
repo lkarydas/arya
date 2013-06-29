@@ -24,6 +24,8 @@
 
 package com.laz.arya;
 
+import java.util.Locale;
+
 import android.opengl.Matrix;
 import android.util.Log;
 
@@ -47,9 +49,9 @@ import com.laz.utils.*;
 		public final Matrix4 invProjectionView = new Matrix4();
 
 		/** the near clipping plane distance, has to be positive **/
-		public float near = 1;
+		public float near = 0.1f;
 		/** the far clipping plane distance, has to be positive **/
-		public float far = 100;
+		public float far = 1000;
 
 		/** the viewport width **/
 		public float viewportWidth = 0;
@@ -183,5 +185,16 @@ import com.laz.utils.*;
 		public void translate (Vector3 vec) {
 			position.add(vec);
 		}
-	}
+
+		public void printViewMatrix() {
+			Log.i("3D_stuff", "View Matrix:");
+			int j = 0;
+			String line;
+			for (int i = 0; i < 4; i++){
+				line = String.format(Locale.US,"%.2f %.2f %.2f %.2f", view.val[j++], view.val[j++], view.val[j++], view.val[j++]);
+				Log.i("3D_stuff", line);
+			}
+			
+		}
+	} 	
 
