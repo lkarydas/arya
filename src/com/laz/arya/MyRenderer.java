@@ -30,11 +30,8 @@ public class MyRenderer implements Renderer {
 		// Redraw background color
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 		camera.update();
-		
 		camera.printViewMatrix();
-		
 		mTriangle.draw(camera.combined);
-
 	}
 
 	@Override
