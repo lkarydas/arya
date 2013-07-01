@@ -40,6 +40,7 @@ public class MyRenderer implements Renderer {
 	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		camera.setViewport(width, height);
+		camera.update();
 	}
 
 	@Override
