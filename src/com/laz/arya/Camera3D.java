@@ -82,8 +82,6 @@ import com.laz.utils.*;
 			//TODO: Field of view has to be parameter
 			// Set projection matrix
 			projection.setToProjection(Math.abs(near), Math.abs(far), 67, aspect);
-			
-			projection.print("Projection matrix");
 			// Set view matrix
 			Log.i("3d_stuff", "position: " + position.toString());
 			Log.i("3d_stuff", "direction: " + direction.toString());
