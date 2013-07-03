@@ -9,13 +9,12 @@ import android.view.MotionEvent;
 class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetector.OnScaleGestureListener{
 	
 	private static final String LOG_TAG = "arya";
-	
+
 	private MyRenderer mRenderer;
-   	private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
 	private float mPreviousX;
 	private float mPreviousY;
 	private final ScaleGestureDetector gestureDetector;
-	
+
 	private static boolean scalingInProgress;
 	
 	private static final String TAG = "AryaGL";
@@ -55,18 +54,13 @@ class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetector.OnSc
 			float dx = x - mPreviousX;
 			float dy = y - mPreviousY;
 			
-			// reverse direction of rotation above the mid-line
-			if (y > getHeight()/2 ){
-				dx = dx * -1;
-				
-			}	
 			
-			// reverse direction of rotation to the left of the mid-line
-			if (x < getWidth()/2){
-				dy = dy * -1;
-			}
+			//mRenderer.mAngle += (dx + dy) * TOUCH_SCALE_FACTOR; // 180.f / 320
+			mRenderer.getCamera().setYawAndPitch(dx, dy);
 			
-			mRenderer.mAngle += (dx + dy) * TOUCH_SCALE_FACTOR; // 180.f / 320
+			Log.i("ACTION_MOVE","("+ dx+", "+dy+")");
+
+			
 			requestRender();
 			
 
@@ -80,21 +74,16 @@ class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetector.OnSc
 
 	@Override
 	public boolean onScale(ScaleGestureDetector detector) {
-		mRenderer.moveCamera(detector.getScaleFactor() - 1);
-		requestRender();
 		return true;
 	}
 
 	@Override
 	public boolean onScaleBegin(ScaleGestureDetector detector) {
-		scalingInProgress = true;
 		return true;
 	}
 
 	@Override
 	public void onScaleEnd(ScaleGestureDetector detector) {
-		scalingInProgress = false;
-		
 	}
 
 }
