@@ -1117,6 +1117,7 @@ public class Matrix4 implements Serializable {
 			}
 			Log.i("3D_stuff", line);
 		}
+		Log.i("3D_stuff", "");
 	}
 
 }
