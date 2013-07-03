@@ -98,9 +98,6 @@ class Triangle {
 
         // get handle to shape's transformation matrix
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
-
-        
-        ViewProjection.print("ViewProjection Matrix");
         
         // Apply the projection and view transformation
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, ViewProjection.val, 0);
