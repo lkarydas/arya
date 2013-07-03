@@ -4,25 +4,13 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLES20;
-import android.opengl.Matrix;
 import android.opengl.GLSurfaceView.Renderer;
 
 public class MyRenderer implements Renderer {
 
 	Triangle mTriangle;
 	Sphere mSphere;
-
-	private final float[] mProjMatrix = new float[16];
-	// Declare as volatile because we are updating it from another thread
-	public volatile float mAngle;
-
-	private final float[] cameraPosition = new float[3];
-
-	Camera3D camera;
-
-	public void moveCamera(float step){
-		cameraPosition[2] += step*10;
-	}
+	private Camera3D camera;
 
 	@Override
 	public void onDrawFrame(GL10 gl) {
@@ -30,7 +18,6 @@ public class MyRenderer implements Renderer {
 		// Redraw background color
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 		camera.update();
-		camera.printViewMatrix();
 		mTriangle.draw(camera.combined);
 	}
 
@@ -67,4 +54,8 @@ public class MyRenderer implements Renderer {
 		return shader;
 	}
 
+	public Camera3D getCamera(){
+		return this.camera;
+	}
+	
 }
