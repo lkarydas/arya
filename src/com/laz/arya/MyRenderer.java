@@ -10,7 +10,8 @@ public class MyRenderer implements Renderer {
 
 	Triangle mTriangle;
 	Sphere mSphere;
-	private Camera3D camera;
+	//private Camera3D camera;
+	public LazCamera camera;
 
 	@Override
 	public void onDrawFrame(GL10 gl) {
@@ -18,19 +19,20 @@ public class MyRenderer implements Renderer {
 		// Redraw background color
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 		camera.update();
-		mTriangle.draw(camera.combined);
+		mTriangle.draw(camera.vp);
 	}
 
 	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		camera.setViewport(width, height);
+        GLES20.glViewport(0, 0, width, height);
 		camera.update();
 	}
 
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
-		camera = new Camera3D();
+		camera = new LazCamera();
 
 		// initialize a triangle
 		mTriangle = new Triangle();
@@ -38,7 +40,7 @@ public class MyRenderer implements Renderer {
 		mSphere = new Sphere(1f, (short) 10, (short) 10);
 
 		// Set the background frame color
-		GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+		GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	}
 
 	public static int loadShader(int type, String shaderCode){
@@ -54,7 +56,7 @@ public class MyRenderer implements Renderer {
 		return shader;
 	}
 
-	public Camera3D getCamera(){
+	public LazCamera getCamera(){
 		return this.camera;
 	}
 	
